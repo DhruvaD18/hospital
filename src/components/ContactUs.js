@@ -16,11 +16,11 @@ const ContactUs = () => {
       'hhrI-Hf8zPOiaMd3a'     
     )
     .then((result) => {
-      console.log('Email sent:', result.text);
+      // console.log('Email sent:', result.text);
       setStatusMessage("Email sent successfully!");
     })
     .catch((error) => {
-      console.error('Error sending email:', error.text);
+      // console.error('Error sending email:', error.text);
       setStatusMessage("Failed to send email. Please try again.");
     });
   };

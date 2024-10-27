@@ -2,21 +2,53 @@ import React, { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getAuth, createUserWithEmailAndPassword,updateProfile  } from "firebase/auth";
 import { app } from './utils/firebase';
-
+// import { setDoc, doc } from "firebase/firestore"; 
+// import { getFirestore } from "firebase/firestore";
 
 const SignUp = () => {
 
   const email = useRef(null);
   const password = useRef(null);
   const userName = useRef(null);
+  const aadhar = useRef(null);
 
   const auth = getAuth(app);
   const navigate = useNavigate();
-
+  // const firestore = getFirestore(app);
 
   const [errorMsg,seterrorMsg] = useState(null)
 
   const handleClick = () =>{
+    // createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+    //     .then((userCredential) => {
+    //         // User created
+    //         const user = userCredential.user;
+
+    //         // Update the user profile with the username
+    //         return updateProfile(user, {
+    //             displayName: userName.current.value,
+    //         }).then(() => {
+    //             // After updating the profile, store additional user information in Firestore
+    //             const userRef = doc(firestore, "users", user.uid);
+    //             return setDoc(userRef, {
+    //                 displayName: userName.current.value,
+    //                 // aadhar: aadhar.current.value,  // Add Aadhaar number here
+    //             });
+    //         });
+    //     })
+    //     .then(() => {
+    //         // Navigate to the home page after successful profile update and Firestore entry
+    //         // console.log('name',auth.currentUser.displayName)
+    //         // console.log('adhar',auth.currentUser.aadhar)
+    //         navigate('/');
+    //     })
+    //     .catch((error) => {
+    //         // Handle errors here
+    //         seterrorMsg(error.code, error.message);
+    //     });
+
+
+
     // console.log(email,password)
     createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
         .then((userCredential) => {
@@ -26,6 +58,7 @@ const SignUp = () => {
             // Update the user profile with the username
             return updateProfile(user, {
                 displayName: userName.current.value,
+                // aadhar:aadhar.current.value,
             });
         })
         .then(() => {
@@ -57,7 +90,11 @@ const SignUp = () => {
             </div>
             <div>
               <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-              <input ref={password} type="password" name="password" id="password" placeholder="Set password" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
+              <input ref={password} type="password" name="password" id="password" placeholder="Enter the password" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
+            </div>
+            <div>
+              <label for="number" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Patient's Aadhar Number</label>
+              <input ref={aadhar} type="text" name="number" id="number" placeholder="Enter the Aadhar Number" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
             </div>
             <button onClick={handleClick} type="submit" className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create an account</button>
             <div className="flex flex-col items-center">
