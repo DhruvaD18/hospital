@@ -1,13 +1,49 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import App from './components/App';
 import reportWebVitals from './reportWebVitals';
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
+import About from './components/About';
+import ContactUs from './components/ContactUs';
+import Header from './components/Header';
+import Footer from './components/Footer';
+
+const Structure = () => {
+  return (
+    <div>
+      <Header />
+      <Outlet />
+      <Footer />
+    </div>
+  )
+}
+
+const appRouter = createBrowserRouter([
+  {
+    path:'/',
+    element:<Structure />,
+    children:[
+      {
+        path:'/',
+        element:<App />
+      },
+      {
+        path:'/about',
+        element:<About />
+      },
+      {
+        path:'/contactus',
+        element:<ContactUs />
+      }
+    ]
+  }
+])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={appRouter} />
   </React.StrictMode>
 );
 
