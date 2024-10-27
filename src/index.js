@@ -10,6 +10,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import LogIn from './components/LogIn';
 import SignUp from './components/SignUp';
+import { Provider } from 'react-redux';
+import appStore from './components/utils/appStore'
 
 const Structure = () => {
   return (
@@ -53,7 +55,9 @@ const appRouter = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={appRouter} />
+    <Provider store={appStore}>
+      <RouterProvider router={appRouter} />
+    </Provider>
   </React.StrictMode>
 );
 
