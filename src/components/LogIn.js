@@ -96,7 +96,7 @@ const LogIn = () => {
                             </Link>
                         </p>
                         <p className="mt-6 text-s text-gray-600 text-center">Already has an account?<Link className="font-medium text-blue-600 underline dark:text-blue-500"  to={'/signup'}>Sign Up</Link></p>
-                        {errorMessage && <p className="text-md font-semibold text-red-600 text-center dark:text-gray-400">{errorMessage}</p>}
+                        {errorMessage && <p className="text-md font-semibold text-red-600 text-center">{errorMessage}</p>}
                     </div>
                 </div>
             </div>

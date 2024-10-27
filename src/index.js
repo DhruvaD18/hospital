@@ -12,6 +12,7 @@ import LogIn from './components/LogIn';
 import SignUp from './components/SignUp';
 import { Provider } from 'react-redux';
 import appStore from './components/utils/appStore'
+import UserProfile from './components/UserProfile';
 
 const Structure = () => {
   return (
@@ -47,6 +48,10 @@ const appRouter = createBrowserRouter([
       {
         path:'/signup',
         element:<SignUp />
+      },
+      {
+        path:'/userprofile',
+        element:<UserProfile />
       }
     ]
   }

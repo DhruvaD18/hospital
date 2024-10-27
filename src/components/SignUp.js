@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword,updateProfile  } from "firebase/auth";
 import { app } from './utils/firebase';
 
 
@@ -17,21 +17,26 @@ const SignUp = () => {
   const [errorMsg,seterrorMsg] = useState(null)
 
   const handleClick = () =>{
-    console.log(email,password)
-    createUserWithEmailAndPassword(auth,email.current.value,password.current.value)
-      .then((userCredential) => {
-        // Signed up 
-        // eslint-disable-next-line no-unused-vars
-        const user = userCredential.user;
-        navigate('/')
-        
-        // ...
-      })
-      .catch((error) => {
-        seterrorMsg(error.code,error.message)
-        // ..
-      });
-  }
+    // console.log(email,password)
+    createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+        .then((userCredential) => {
+            // User created
+            const user = userCredential.user;
+
+            // Update the user profile with the username
+            return updateProfile(user, {
+                displayName: userName.current.value,
+            });
+        })
+        .then(() => {
+            // Navigate to the home page after successful profile update
+            // console.log(auth.currentUser.displayName)
+            navigate('/');
+        })
+        .catch((error) => {
+            seterrorMsg(error.code, error.message);
+        });
+      };
 
   return (
     <section className="flex flex-col items-center pt-6">
@@ -82,7 +87,7 @@ const SignUp = () => {
               <p className="text-sm font-light text-black text-center dark:text-gray-400">Already have an account? <Link
                 className="font-medium text-blue-600 underline dark:text-blue-500" to={'/login'}>Sign in here</Link>
               </p>
-              {errorMsg && <p className="text-md font-semibold text-red-600 text-center dark:text-gray-400">{errorMsg}</p>}
+              {errorMsg && <p className="text-md font-semibold text-red-600 text-center">{errorMsg}</p>}
           </form>
         </div>
       </div>
