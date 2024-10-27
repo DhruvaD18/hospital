@@ -8,6 +8,8 @@ import About from './components/About';
 import ContactUs from './components/ContactUs';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import LogIn from './components/LogIn';
+import SignUp from './components/SignUp';
 
 const Structure = () => {
   return (
@@ -35,6 +37,14 @@ const appRouter = createBrowserRouter([
       {
         path:'/contactus',
         element:<ContactUs />
+      },
+      {
+        path:'/login',
+        element:<LogIn />
+      },
+      {
+        path:'/signup',
+        element:<SignUp />
       }
     ]
   }
