@@ -1,8 +1,32 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { app } from './utils/firebase';
 
 const LogIn = () => {
+
+  const email = useRef(null);
+  const password = useRef(null);
+
+  const auth = getAuth(app)
+  const navigate = useNavigate();
+  const [errorMessage,seterrorMessage] = useState(null);
+
+  const handleClick = () =>{
+    signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+        .then((userCredential) => {
+            // Signed in 
+            // eslint-disable-next-line no-unused-vars
+            const user = userCredential.user;
+            navigate('/')
+            // ...
+        })
+        .catch((error) => {
+            seterrorMessage(error.code,error.message)
+        });
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
     <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
@@ -43,13 +67,13 @@ const LogIn = () => {
                     </div>
 
                     <div className="mx-auto max-w-xs">
-                        <input
+                        <input ref={email}
                             className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                             type="email" placeholder="Email" />
-                        <input
+                        <input ref={password}
                             className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                             type="password" placeholder="Password" />
-                        <button
+                        <button onClick={handleClick}
                             className="mt-5 tracking-wide font-semibold bg-blue-300 text-white-500 w-full py-4 rounded-lg hover:bg-blue-600 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                             <svg className="w-6 h-6 -ml-2" fill="none" stroke="currentColor" strokeWidth="2"
                                 strokeLinecap="round" strokeLinejoin="round">
@@ -72,6 +96,7 @@ const LogIn = () => {
                             </Link>
                         </p>
                         <p className="mt-6 text-s text-gray-600 text-center">Already has an account?<Link className="font-medium text-blue-600 underline dark:text-blue-500"  to={'/signup'}>Sign Up</Link></p>
+                        {errorMessage && <p className="text-md font-semibold text-red-600 text-center dark:text-gray-400">{errorMessage}</p>}
                     </div>
                 </div>
             </div>
