@@ -23,8 +23,8 @@ const SignUp = () => {
         // Signed up 
         // eslint-disable-next-line no-unused-vars
         const user = userCredential.user;
-        console.log('entered',user)
         navigate('/')
+        
         // ...
       })
       .catch((error) => {
