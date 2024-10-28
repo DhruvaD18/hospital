@@ -6,8 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { setType } from './utils/TypeSlice'
-// import { setDoc, doc } from "firebase/firestore"; 
-// import { getFirestore } from "firebase/firestore";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 const SignUp = () => {
 
@@ -19,7 +18,8 @@ const SignUp = () => {
   const auth = getAuth(app);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const firestore = getFirestore(app);
+  const db = getFirestore(app);
+
 
   const [errorMsg,seterrorMsg] = useState(null)
 
@@ -59,6 +59,9 @@ const SignUp = () => {
         .then((userCredential) => {
             // User created
             const user = userCredential.user;
+            setDoc(doc(db, "users", user.uid), {
+              role: "patient" // role could be "hospital" or "patient"
+            });
 
             // Update the user profile with the username
             return updateProfile(user, {

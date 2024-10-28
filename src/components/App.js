@@ -13,10 +13,10 @@ const App = () => {
           <p className='font-semibold text-lg'>Sign In as <span className='text-2xl text-indigo-600 underline'>Hospital</span></p>
           <p className='text-slate-600 my-10'>about our service</p>
           <div className='flex gap-4 items-center justify-center'>
-            <Link to={'/login'}>
+            <Link to={'/hospital-login'}>
               <button className="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">SignIn</button>
             </Link>
-            <Link to={'/signup'}>
+            <Link to={'/hospital-signUp'}>
               <button className="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">SignUp</button>
             </Link>
           </div>

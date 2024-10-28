@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { setType } from './utils/TypeSlice'
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 
 const LogIn = () => {
 
@@ -14,6 +15,7 @@ const LogIn = () => {
   const password = useRef(null);
 
   const auth = getAuth(app)
+  const db = getFirestore(app);
   const navigate = useNavigate();
   const [errorMessage,seterrorMessage] = useState(null);
   const dispatch = useDispatch();
@@ -22,26 +24,73 @@ const LogIn = () => {
   const handleClick = () =>{
     signInWithEmailAndPassword(auth, email.current.value, password.current.value)
         .then((userCredential) => {
-            // Signed in 
-            // eslint-disable-next-line no-unused-vars
-            const user = userCredential.user;
-            dispatch(setType({type:"patient"}))
-            toast.success('SignIn successfully', {
+        const user = userCredential.user;
+        const userRef = doc(db, "users", user.uid);
+
+        // Get the user's role from Firestore
+        console.log('userref',userRef)
+        getDoc(userRef)
+            .then((docSnap) => {
+            if (docSnap.exists()) {
+                const role = docSnap.data().role;
+
+                // Dispatch the role and show success toast based on role
+                console.log('role is',role)
+                dispatch(setType({ type: role }));
+
+                toast.success('SignIn successfully', {
                 position: "top-center",
                 autoClose: 3000,
-                onClose: () => navigate('/'),
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
                 theme: "light",
+                onClose: () => {
+                    // Navigate to different dashboards based on role
+                    if (role === "hospital") {
+                        navigate('/');
+                    } else if (role === "patient"){
+                        navigate('/');
+                    } else {
+                        navigate('/'); // Default redirect
+                    }
+                }
                 });
-            // ...
+            } else {
+                console.log("No such document!");
+            }
+            })
+            .catch((error) => {
+                console.log("Error getting document:", error);
+            });
         })
         .catch((error) => {
-            seterrorMessage(error.code,error.message)
+        seterrorMessage(error.code, error.message);
         });
+        // .then((userCredential) => {
+        //     // Signed in 
+        //     const user = userCredential.user;
+        //     const userRef = doc(db, "users", user.uid);
+            
+        //     dispatch(setType({type:"patient"}))
+        //     toast.success('SignIn successfully', {
+        //         position: "top-center",
+        //         autoClose: 3000,
+        //         onClose: () => navigate('/'),
+        //         hideProgressBar: false,
+        //         closeOnClick: true,
+        //         pauseOnHover: true,
+        //         draggable: true,
+        //         progress: undefined,
+        //         theme: "light",
+        //         });
+        //     // ...
+        // })
+        // .catch((error) => {
+        //     seterrorMessage(error.code,error.message)
+        // });
   }
 
   return (
