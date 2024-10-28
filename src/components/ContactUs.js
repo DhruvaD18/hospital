@@ -1,8 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import emailjs from 'emailjs-com';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ContactUs = () => {
+
+  const navigate = useNavigate();
   const form = useRef();
   const [statusMessage, setStatusMessage] = useState("");
 
@@ -17,6 +21,17 @@ const ContactUs = () => {
     )
     .then((result) => {
       // console.log('Email sent:', result.text);
+      toast.success('SignIn successfully', {
+        position: "top-center",
+        autoClose: 3000,
+        onClose: () => navigate('/'),
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
       setStatusMessage("Email sent successfully!");
     })
     .catch((error) => {
@@ -27,6 +42,7 @@ const ContactUs = () => {
 
   return (
     <section className="text-gray-600 body-font relative">
+      <ToastContainer />
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-col text-center w-full mb-12">
           <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Contact Us</h1>

@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getAuth, createUserWithEmailAndPassword,updateProfile  } from "firebase/auth";
 import { app } from './utils/firebase';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import { setDoc, doc } from "firebase/firestore"; 
 // import { getFirestore } from "firebase/firestore";
 
@@ -64,7 +66,17 @@ const SignUp = () => {
         .then(() => {
             // Navigate to the home page after successful profile update
             // console.log(auth.currentUser.displayName)
-            navigate('/');
+            toast.success('SignUp successfully', {
+              position: "top-center",
+              autoClose: 3000,
+              onClose: () => navigate('/'),
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              });
         })
         .catch((error) => {
             seterrorMsg(error.code, error.message);
@@ -73,6 +85,7 @@ const SignUp = () => {
 
   return (
     <section className="flex flex-col items-center pt-6">
+      <ToastContainer />
       <div
         className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
