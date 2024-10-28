@@ -29,7 +29,7 @@ const Header = () => {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
         const {uid,email,displayName,aadhar} = user;
-        console.log(aadhar)
+        // console.log(aadhar)
         dispatch(setUser({uid:uid,email:email,name:displayName,aadhar:aadhar}))
         // ...
       } else {
