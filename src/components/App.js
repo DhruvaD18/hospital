@@ -11,10 +11,19 @@ const App = () => {
       {!user && <section className='text-slate-900 h-screen w-screen py-10 body-font'>
         <div className='h-1/2 w-8/12 shadow-md hover:shadow-xl rounded-md mx-auto my-10 text-center p-3'>
           <p className='font-semibold text-lg'>Sign In as <span className='text-2xl text-indigo-600 underline'>Hospital</span></p>
+          <p className='text-slate-600 my-10'>about our service</p>
+          <div className='flex gap-4 items-center justify-center'>
+            <Link to={'/login'}>
+              <button className="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">SignIn</button>
+            </Link>
+            <Link to={'/signup'}>
+              <button className="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">SignUp</button>
+            </Link>
+          </div>
         </div>
         <div className='h-1/2 w-8/12 shadow-md hover:shadow-xl rounded-md mx-auto my-10 text-center p-3'>
           <p className='font-semibold text-lg'>Sign In as <span className='text-2xl text-indigo-600 underline'>Patient</span></p>
-          <p className='text-slate-600 my-10'>about our treatment</p>
+          <p className='text-slate-600 my-10'>about our service</p>
           <div className='flex gap-4 items-center justify-center'>
             <Link to={'/login'}>
               <button className="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">SignIn</button>

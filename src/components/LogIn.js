@@ -5,6 +5,8 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from './utils/firebase';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux';
+import { setType } from './utils/TypeSlice'
 
 const LogIn = () => {
 
@@ -14,6 +16,7 @@ const LogIn = () => {
   const auth = getAuth(app)
   const navigate = useNavigate();
   const [errorMessage,seterrorMessage] = useState(null);
+  const dispatch = useDispatch();
 //   toast('signIn successfull')
 
   const handleClick = () =>{
@@ -22,6 +25,7 @@ const LogIn = () => {
             // Signed in 
             // eslint-disable-next-line no-unused-vars
             const user = userCredential.user;
+            dispatch(setType({type:"patient"}))
             toast.success('SignIn successfully', {
                 position: "top-center",
                 autoClose: 3000,

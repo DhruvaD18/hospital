@@ -5,12 +5,14 @@ import { setUser,clearUser } from './utils/UserSlice'
 import { getAuth, onAuthStateChanged,signOut  } from "firebase/auth";
 import { app } from './utils/firebase';
 import { useDispatch, useSelector } from 'react-redux';
+import { clearType } from './utils/TypeSlice'
 
 const Header = () => {
 
   const auth = getAuth(app);
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
+  const type = useSelector((state)=>state.type.value)
 
   const handleClick = () =>{
     const auth = getAuth();
@@ -33,6 +35,7 @@ const Header = () => {
       } else {
         // User is signed out
         dispatch(clearUser())
+        dispatch(clearType())
         // ...
       }
     });
@@ -51,7 +54,7 @@ const Header = () => {
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
           <Link className="mr-5 hover:text-gray-900" to={'/about'}>About</Link>
           <Link className="mr-5 hover:text-gray-900" to={'/contactus'}>ContactUs</Link>
-          <Link className="mr-5 hover:text-gray-900" to={'/about'}>About</Link>
+          {type && type.type==='patient' && <Link className="mr-5 hover:text-gray-900" to={'/about'}>Hospitals</Link>}
           <Link className="mr-5 hover:text-gray-900" to={'/about'}>About</Link>
         </nav>
         {user && <div className='flex gap-5 items-center'>

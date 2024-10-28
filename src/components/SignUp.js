@@ -4,6 +4,8 @@ import { getAuth, createUserWithEmailAndPassword,updateProfile  } from "firebase
 import { app } from './utils/firebase';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux';
+import { setType } from './utils/TypeSlice'
 // import { setDoc, doc } from "firebase/firestore"; 
 // import { getFirestore } from "firebase/firestore";
 
@@ -16,6 +18,7 @@ const SignUp = () => {
 
   const auth = getAuth(app);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   // const firestore = getFirestore(app);
 
   const [errorMsg,seterrorMsg] = useState(null)
@@ -66,6 +69,7 @@ const SignUp = () => {
         .then(() => {
             // Navigate to the home page after successful profile update
             // console.log(auth.currentUser.displayName)
+            dispatch(setType({type:"patient"}))
             toast.success('SignUp successfully', {
               position: "top-center",
               autoClose: 3000,

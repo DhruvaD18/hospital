@@ -13,6 +13,8 @@ import SignUp from './components/SignUp';
 import { Provider } from 'react-redux';
 import appStore from './components/utils/appStore'
 import UserProfile from './components/UserProfile';
+import Hlogin from './components/Hlogin';
+import HsignUp from './components/HsignUp';
 
 const Structure = () => {
   return (
@@ -52,6 +54,14 @@ const appRouter = createBrowserRouter([
       {
         path:'/userprofile',
         element:<UserProfile />
+      },
+      {
+        path:'/hospital-login',
+        element:<Hlogin />
+      },
+      {
+        path:'/hospital-signUp',
+        element:<HsignUp />
       }
     ]
   }
