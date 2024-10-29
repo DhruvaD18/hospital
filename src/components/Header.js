@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { setUser,clearUser } from './utils/UserSlice'
+import {clearUser } from './utils/UserSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import { clearType } from './utils/TypeSlice'
 
@@ -12,7 +12,8 @@ const Header = () => {
   const type = useSelector((state)=>state.type.value)
 
   const handleClick = () =>{
-    
+    dispatch(clearUser())
+    dispatch(clearType())
   }
 
   return (

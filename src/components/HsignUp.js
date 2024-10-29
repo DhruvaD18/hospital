@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { setType } from './utils/TypeSlice'
-import axios from 'axios';
+import { setUser } from './utils/UserSlice';
 
 const HsignUp = () => {
 
@@ -34,26 +34,36 @@ const HsignUp = () => {
     };
 
     try {
-        // Sending hospital data to the backend
-        await axios.post('http://localhost:5000/api/addHospital', hospitalData);
+      const response =  await fetch('http://localhost:5000/api/signUp-hospital', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(hospitalData),
+      });
+      
+      if(response.ok){
+        console.log("succesfully signed up")
+      }else{
+        console.log("error while logging in")
+      }
 
-        // Dispatching the action and showing success toast
-        dispatch(setType({ type: "hospital" }));
-        toast.success('SignUp successfully', {
-            position: "top-center",
-            autoClose: 3000,
-            onClose: () => navigate('/'),
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
+      dispatch(setUser({email:email.current.value,userName:userName.current.value}))
+      dispatch(setType({ type: "hopital" }));
+      toast.success('SignUp successfully', {
+        position: "top-center",
+        autoClose: 3000,
+        onClose: () => navigate('/'),
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } catch (error) {
-        // Handle errors here
-        console.error('Error adding hospital:', error);
-        seterrorMsg(error.code, error.message); // Assuming you have this function to set error messages
+      console.error('Error adding patient:', error);
+      seterrorMsg(error.message || 'An error occurred. Please try again.');
     }
   }
 

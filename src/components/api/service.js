@@ -45,7 +45,7 @@ app.post("/api/signUp-patient",async(req,res)=>{
         const newPatient = new Patient(req.body);
         const savedPatient = await newPatient.save()
     
-        res.json({ message: "Retailer signed up successfully", retailer: savedPatient });
+        res.json({ message: "patient signed up successfully", patient: savedPatient });
     }catch(e){
         console.error(e);
         res.status(500).json({
@@ -54,15 +54,27 @@ app.post("/api/signUp-patient",async(req,res)=>{
     }
 })
 
-/////////////////////////POST REQ FOR HOSPITAL//////////////////////
+/////////////////////////POST REQ FOR HOSPITAL/////////////////////////////
+
+app.post("/api/signUp-hospital",async(req,res)=>{
+    try{
+        const newHospital = new Hospital(req.body)
+        const savedHospital = await newHospital.save()
+
+        res.json({message:"successfully signed Up hospital", hospital: savedHospital})
+    }catch(e){
+        console.error(e);
+        res.status(500).json({
+          error: "Internal server error",
+        });
+    }
+})
 
 
 
 
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
-
-
 
 
 
