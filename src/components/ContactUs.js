@@ -21,7 +21,7 @@ const ContactUs = () => {
     )
     .then((result) => {
       // console.log('Email sent:', result.text);
-      toast.success('SignIn successfully', {
+      toast.success('complaint lodged successfully', {
         position: "top-center",
         autoClose: 3000,
         onClose: () => navigate('/'),
