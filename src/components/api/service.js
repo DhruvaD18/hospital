@@ -155,9 +155,30 @@ app.get("/api/check-hospital-password",async(req,res)=>{
         }
 
     }catch(e){
-        console.log(e);
+        // console.log(e);
         res.status(500).json({
             error: "Internal server error",
+        })
+    }
+})
+
+///////////////////////////////FETCHING ALL HOSPITAL DATA FOR /api/hospitals-data//////////////////////////
+
+app.get("/api/hospitals-data",async(req,res)=>{
+    try{
+        const data = await Hospital.find({}).exec()
+
+        if(!data){
+            return res.status(400).json({
+                error: "No data found",
+            });
+        }else{
+            res.json({data});
+        }
+
+    }catch(e){
+        res.status(500).json({
+            error: "Error in finding hospital data",
         })
     }
 })

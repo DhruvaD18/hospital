@@ -15,6 +15,7 @@ import appStore from './components/utils/appStore'
 import UserProfile from './components/UserProfile';
 import Hlogin from './components/Hlogin';
 import HsignUp from './components/HsignUp';
+import Hospitals from './components/Hospitals';
 
 const Structure = () => {
   return (
@@ -62,6 +63,10 @@ const appRouter = createBrowserRouter([
       {
         path:'/hospital-signUp',
         element:<HsignUp />
+      },
+      {
+        path:'/hospitals',
+        element:<Hospitals />
       }
     ]
   }

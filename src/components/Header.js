@@ -24,13 +24,13 @@ const Header = () => {
           <span className="ml-3 text-xl">AYUSHMITRA</span>
         </Link>
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+          <Link className="mr-5 hover:text-gray-900" to={'/'}>Home</Link> 
           <Link className="mr-5 hover:text-gray-900" to={'/about'}>About</Link>
           <Link className="mr-5 hover:text-gray-900" to={'/contactus'}>ContactUs</Link>
-          {type && type.type==='patient' && <Link className="mr-5 hover:text-gray-900" to={'/about'}>Hospitals</Link>}
-          <Link className="mr-5 hover:text-gray-900" to={'/about'}>About</Link>
+          {type && type.type==='patient' && <Link className="mr-5 hover:text-gray-900" to={'/hospitals'}>Hospitals</Link>}
         </nav>
         {user && <div className='flex gap-5 items-center'>
-          <Link to={'https://ayushmitra-bot.streamlit.app/'} className='h-10 w-fit px-3 py-2 text-center rounded-md bg-black text-white font-semibold'>Chat-bot</Link>
+          <Link to={'https://ayushmitra-bot.streamlit.app/'} target='_blank' className='h-10 w-fit px-3 py-2 text-center rounded-md bg-black text-white font-semibold'>Chat-bot</Link>
           <Link to={'/userprofile'}><img src='https://tse4.mm.bing.net/th?id=OIP.xk_dSiIK7c695LbAQ3Ua3gHaHa&pid=Api&P=0&h=180' alt='userImg' className='h-10 w-10 rounded-full' /></Link>
           <Link to={'/'}>
             <button onClick={handleClick} className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">LogOut

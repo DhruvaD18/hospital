@@ -99,7 +99,7 @@ const LogIn = () => {
                     </div>
                 </div>
             </div>
-            <div className="border-blue-200 border-solid border-4 rounded-lg flex-1 bg-red-700 text-center hidden lg:flex">
+            <div className="border-blue-200 border-solid border-4 rounded-lg flex-1 bg-slate-200 text-center hidden lg:flex">
                 <img src='https://hospitalmanagementsystem.org/images/hospital-information-system.jpg' alt='pic' className='' />
             </div>
         </div>
