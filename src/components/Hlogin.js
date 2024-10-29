@@ -44,27 +44,27 @@ const Hlogin = () => {
           seterrorMessage('wrong password');
       }
     }catch(e){
-
+        seterrorMessage('Unexpected Error occured')
     }
 
-    dispatch(setType({ type: "Hospital" }));
-    toast.success('SignIn successfully', {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      onClose: () => {navigate('/')}
-    });
+    // dispatch(setType({ type: "Hospital" }));
+    // toast.success('SignIn successfully', {
+    //   position: "top-center",
+    //   autoClose: 3000,
+    //   hideProgressBar: false,
+    //   closeOnClick: true,
+    //   pauseOnHover: true,
+    //   draggable: true,
+    //   progress: undefined,
+    //   theme: "light",
+    //   onClose: () => {navigate('/')}
+    // });
   }
 
   return (
     <div className="h-fit w-full flex-1 my-20">
       <ToastContainer />
-      <div className='text-3xl font-semibold mb-16 text-center font-sans underline underline-offset-2 text-slate-600'>Sign In as Patient</div>
+      <div className='text-3xl font-semibold mb-16 text-center font-sans underline underline-offset-2 text-slate-600'>Sign In as Organisation</div>
         <div className="mx-auto max-w-xs">
           <input ref={email}
             className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"

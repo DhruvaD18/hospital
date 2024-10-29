@@ -48,7 +48,7 @@ const LogIn = () => {
   
         // dispatch(setUser({email:email.current.value,userName:userName.current.value}))        
       } catch (error) {
-        console.error('Error adding patient:', error);
+        // console.error('Error adding patient:', error);
         seterrorMessage(error.message || 'An error occurred. Please try again.');
       }
     

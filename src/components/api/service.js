@@ -42,6 +42,7 @@ const Hospital = mongoose.model('hospital',hospitalSchema)
 
 app.post("/api/signUp-patient",async(req,res)=>{
     try{
+        // console.log(req.body)
         const newPatient = new Patient(req.body);
         const savedPatient = await newPatient.save()
     
