@@ -22,7 +22,7 @@ const App = () => {
           </div>
         </div>
         <div className='h-1/2 w-8/12 shadow-md hover:shadow-xl rounded-md mx-auto my-10 text-center p-3'>
-          <p className='font-semibold text-lg'>Sign In as <span className='text-2xl text-indigo-600 underline'>Patient</span></p>
+          <p className='font-semibold text-lg'>Sign In as <span className='text-2xl text-indigo-600 underline'>Individual</span></p>
           <p className='text-slate-600 mt-8 mx-20'>An online hospital management system improves patient experience by streamlining appointments, centralizing records, and ensuring data security. Patients benefit from faster service, easier access to their health information, and improved care quality, all supported by efficient hospital operations.</p>
           <div className='flex gap-4 items-center justify-center'>
             <Link to={'/login'}>
