@@ -3,14 +3,15 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-const corsOptions = {
-  origin: '*',
-  credentials: true, // Allow credentials if needed
-};
 
 console.log('entered hospital file')
 const app = express();
-app.use(cors({corsOptions}));
+app.use(
+  cors({
+      origin: "*",
+      // credentials: true,
+    })
+);
 app.use(bodyParser.json());
 
 // MongoDB connection
@@ -26,6 +27,7 @@ const hospitalSchema = new mongoose.Schema({
   hospitalName: String,
   location: String,
   email: String,
+  password: String,
   contact: String,
   beds: Number,
   staff: Number,

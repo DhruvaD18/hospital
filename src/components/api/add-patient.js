@@ -1,18 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 
-// const corsOptions = {
-//   origin: 'http://localhost:3000',
-//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//   credentials: true, // Allow credentials if needed
-// };
-
-console.log('entered patient file')
+// console.log('entered patient file')
 const app = express();
-app.use(cors());
-app.use(bodyParser.json());
+app.use(cors({
+  origin: "http://localhost:3000", 
+  credentials: true, 
+}));
+app.options('*', cors());
+app.use(express.json());
 
 // MongoDB connection
 console.log('before connecting patient')
@@ -28,16 +26,19 @@ const patientSchema = new mongoose.Schema({
   Name: String,
   email: String,
   aadhar: String,
+  password:String,
 });
 const Patient = mongoose.model('Patient', patientSchema);
 
 // Endpoint to add patient data
-app.post('/api/addPatient', async (req, res) => {
+app.post('/api/addPatients', async (req, res) => {
   try {
     const newPatient = new Patient(req.body);
     await newPatient.save();
+    console.log("patient saved")
     res.status(201).send(newPatient);
   } catch (error) {
+    console.log("error found")
     res.status(400).send(error);
   }
 });

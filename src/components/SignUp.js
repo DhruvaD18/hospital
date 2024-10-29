@@ -25,11 +25,16 @@ const SignUp = () => {
         Name: userName.current.value,
         email: email.current.value,
         aadhar: aadhar.current.value,
+        password: password.current.value
     };
 
     try {
         // Sending patient data to the backend
-        await axios.post('http://localhost:5000/api/addPatients', patientData);
+        const response = await axios.post('http://localhost:5000/api/addPatients', patientData, {
+          withCredentials: true, // Include credentials if necessary
+        })
+        .then(()=>{console.log(response.data)})
+        .catch((e)=>{alert('error found')})
         
         // Dispatching the action and showing success toast
         dispatch(setType({ type: "patient" }));

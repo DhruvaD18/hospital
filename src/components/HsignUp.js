@@ -26,6 +26,7 @@ const HsignUp = () => {
       hospitalName: userName.current.value,
       location: address.current.value,
       email: email.current.value,
+      password: password.current.value,
       contact: mobile.current.value,
       beds: parseInt(bedsCount.current.value, 10),
       staffs: parseInt(staffCount.current.value, 10),
