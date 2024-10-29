@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { setType } from './utils/TypeSlice'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { setUser } from './utils/UserSlice';
 
 const Hlogin = () => {
 
@@ -14,9 +15,40 @@ const Hlogin = () => {
   const dispatch = useDispatch();
   const [errorMessage,seterrorMessage] = useState(null)
 
-  const handleClick = () =>{
-    dispatch(setType({ type: "" }));
+  const handleClick = async() =>{
 
+    try{
+      const response =  await fetch(`http://localhost:5000/api/check-hospital-password?type=${"GET"}&value=${email.current.value}&password=${password.current.value}`);
+      const data = await response.json()
+      if (data.passwordMatch === undefined) {
+        // Error handling: Unable to check password
+        console.log("Error checking password");
+        return null;
+    } else if (data.passwordMatch) {
+        // Password matches, return the user data
+        dispatch(setType({ type: "hospital" }));
+        dispatch(setUser({email:data.hospital.email,userName:data.hospital.hospitalName}))
+        toast.success('SignIn successfully', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            onClose: () => {navigate('/')}
+        });
+        return data.hospital;
+      } else {
+          // Password is incorrect
+          seterrorMessage('wrong password');
+      }
+    }catch(e){
+
+    }
+
+    dispatch(setType({ type: "Hospital" }));
     toast.success('SignIn successfully', {
       position: "top-center",
       autoClose: 3000,
@@ -26,7 +58,7 @@ const Hlogin = () => {
       draggable: true,
       progress: undefined,
       theme: "light",
-      onClose: () => {'/'}
+      onClose: () => {navigate('/')}
     });
   }
 

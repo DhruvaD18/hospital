@@ -21,7 +21,7 @@ const LogIn = () => {
     try {
         const response =  await fetch(`http://localhost:5000/api/check-patient-password?type=${"GET"}&value=${email.current.value}&password=${password.current.value}`);
         const data = await response.json()
-        console.log(data)
+        // console.log(data)
         if (data.passwordMatch === undefined) {
             // Error handling: Unable to check password
             console.log("Error checking password");

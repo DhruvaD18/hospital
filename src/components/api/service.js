@@ -83,7 +83,7 @@ app.get("/api/check-patient-password",async(req,res)=>{
         }
 
         const patient = await Patient.findOne({email:email}).exec()
-        console.log(patient)
+        // console.log(patient)
 
         if(!patient){
             return res.json({ error: "User not found" });
@@ -110,13 +110,56 @@ app.get("/api/check-patient-password",async(req,res)=>{
     }catch(e){
         console.log(e);
         res.status(500).json({
-        error: "Internal server error",
+            error: "Internal server error",
         });
     }
     
 })
 
+///////////////////////////////GET REQ FOR /api/check-hospital-password/////////////////////
 
+app.get("/api/check-hospital-password",async(req,res)=>{
+    try{
+
+        const email = req.query.value
+
+        if(!email){
+            return res.status(400).json({
+                error: "Email is required in the query parameters.",
+            });
+        }
+
+        const hospital = await Hospital.findOne({email:email}).exec()
+
+        if(!hospital){
+            return res.json({ error: "User not found" });
+        }
+
+        const providedPassword = req.query.password
+
+        if(!providedPassword){
+            return res.status(400).json({
+                error: "Password is required in the query parameters.",
+            });
+        }
+
+        const isValidPassword = providedPassword===hospital.password
+
+        if (isValidPassword) {
+            // Password is correct, return the entire user data
+            res.json({ passwordMatch: true, hospital });
+        } else {
+            // Password is incorrect
+            res.json({ passwordMatch: false });
+        }
+
+    }catch(e){
+        console.log(e);
+        res.status(500).json({
+            error: "Internal server error",
+        })
+    }
+})
 
 
 
