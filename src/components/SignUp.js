@@ -1,12 +1,9 @@
 import React, { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { getAuth, createUserWithEmailAndPassword,updateProfile  } from "firebase/auth";
-import { app } from './utils/firebase';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { setType } from './utils/TypeSlice'
-import { getFirestore, doc, setDoc } from "firebase/firestore";
 import axios from 'axios';
 
 const SignUp = () => {
@@ -16,59 +13,44 @@ const SignUp = () => {
   const userName = useRef(null);
   const aadhar = useRef(null);
 
-  const auth = getAuth(app);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const db = getFirestore(app);
 
 
   const [errorMsg,seterrorMsg] = useState(null)
 
-  const handleClick = () =>{
-    createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
-        .then((userCredential) => {
-            // User created
-            const user = userCredential.user;
-            setDoc(doc(db, "users", user.uid), {
-              role: "patient" // role could be "hospital" or "patient"
-            });
+  const handleClick = async() =>{
 
-            // Update the user profile with the username
-            return updateProfile(user, {
-                displayName: userName.current.value,
-                // aadhar:aadhar.current.value,
-            });
-        })
-        .then(()=>{
-          const patientData = {
-              Name: userName.current.value,
-              email:email.current.value,
-              aadhar:aadhar.current.value,
-            };
+    const patientData = {
+        Name: userName.current.value,
+        email: email.current.value,
+        aadhar: aadhar.current.value,
+    };
 
-            return axios.post('http://localhost:5000/api/addPatients', patientData);
-            // console.log('Sending hospital data:', hospitalData);
-        })
-        .then(() => {
-            // Navigate to the home page after successful profile update
-            // console.log(auth.currentUser.displayName)
-            dispatch(setType({type:"patient"}))
-            toast.success('SignUp successfully', {
-              position: "top-center",
-              autoClose: 3000,
-              onClose: () => navigate('/'),
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-              });
-        })
-        .catch((error) => {
-            seterrorMsg(error.code, error.message);
+    try {
+        // Sending patient data to the backend
+        await axios.post('http://localhost:5000/api/addPatients', patientData);
+        
+        // Dispatching the action and showing success toast
+        dispatch(setType({ type: "patient" }));
+        toast.success('SignUp successfully', {
+            position: "top-center",
+            autoClose: 3000,
+            onClose: () => navigate('/'),
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
         });
-      };
+    } catch (error) {
+        // Handle errors here
+        console.error('Error adding patient:', error);
+        seterrorMsg(error.code, error.message); // Assuming you have this function to set error messages
+    }
+    
+  };
 
   return (
     <section className="flex flex-col items-center pt-6">

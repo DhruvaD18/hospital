@@ -1,12 +1,9 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { app } from './utils/firebase';
 import { ToastContainer, toast } from 'react-toastify';
-import { getAuth, createUserWithEmailAndPassword,updateProfile  } from "firebase/auth";
 import 'react-toastify/dist/ReactToastify.css';
 import { setType } from './utils/TypeSlice'
-import { getFirestore, doc, setDoc } from "firebase/firestore";
 import axios from 'axios';
 
 const HsignUp = () => {
@@ -22,59 +19,41 @@ const HsignUp = () => {
 
   const [errorMsg,seterrorMsg] = useState(null)
   const dispatch = useDispatch();
-  const db = getFirestore(app);
-  const auth = getAuth(app);
   const navigate = useNavigate();
 
-  const handleClick = () =>{
-    createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
-        .then((userCredential) => {
-            // User created
-            const user = userCredential.user;
-            setDoc(doc(db, "hospital", user.uid), {
-              role: "hospital" // role could be "hospital" or "patient"
-            });
+  const handleClick = async() =>{
+    const hospitalData = {
+      hospitalName: userName.current.value,
+      location: address.current.value,
+      email: email.current.value,
+      contact: mobile.current.value,
+      beds: parseInt(bedsCount.current.value, 10),
+      staffs: parseInt(staffCount.current.value, 10),
+      specialties: specialities.current.value.split(',').map(s => s.trim()),
+    };
 
-            // Update the user profile with the username
-            return updateProfile(user, {
-                displayName: userName.current.value,
-                // aadhar:aadhar.current.value,
-            });
-        })
-        .then(()=>{
-          const hospitalData = {
-              hospitalName: userName.current.value,
-              location: address.current.value,
-              email:email.current.value,
-              contact:mobile.current.value,
-              beds: parseInt(bedsCount.current.value, 10),
-              staffs: parseInt(staffCount.current.value,10),
-              specialties: specialities.current.value.split(',').map(s => s.trim()),
-            };
+    try {
+        // Sending hospital data to the backend
+        await axios.post('http://localhost:5000/api/addHospital', hospitalData);
 
-            
-            return axios.post('http://localhost:5000/api/addHospital', hospitalData);
-            // console.log('Sending hospital data:', hospitalData);
-        })
-        .then(() => {
-            // Navigate to the home page after successful profile update
-            // console.log(auth.currentUser.displayName)
-            dispatch(setType({type:"hospital"}))
-            toast.success('SignUp successfully', {
-              position: "top-center",
-              autoClose: 3000,
-              onClose: () => navigate('/'),
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-              });
-        })
-        .catch((error) => {
-            seterrorMsg(error.code, error.message);
+        // Dispatching the action and showing success toast
+        dispatch(setType({ type: "hospital" }));
+        toast.success('SignUp successfully', {
+            position: "top-center",
+            autoClose: 3000,
+            onClose: () => navigate('/'),
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
         });
+    } catch (error) {
+        // Handle errors here
+        console.error('Error adding hospital:', error);
+        seterrorMsg(error.code, error.message); // Assuming you have this function to set error messages
+    }
   }
 
   return (

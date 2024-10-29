@@ -2,45 +2,18 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { setUser,clearUser } from './utils/UserSlice'
-import { getAuth, onAuthStateChanged,signOut  } from "firebase/auth";
-import { app } from './utils/firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearType } from './utils/TypeSlice'
 
 const Header = () => {
 
-  const auth = getAuth(app);
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
   const type = useSelector((state)=>state.type.value)
 
   const handleClick = () =>{
-    const auth = getAuth();
-    signOut(auth).then(() => {
-      // Sign-out successful.
-    }).catch((error) => {
-      // An error happened.
-    });
+    
   }
-
-  useEffect(()=>{
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
-        const {uid,email,displayName,aadhar} = user;
-        // console.log(aadhar)
-        dispatch(setUser({uid:uid,email:email,name:displayName,aadhar:aadhar}))
-        // ...
-      } else {
-        // User is signed out
-        dispatch(clearUser())
-        dispatch(clearType())
-        // ...
-      }
-    });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
 
   return (
     <header className="text-gray-600 body-font">
