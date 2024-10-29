@@ -33,6 +33,11 @@ const HsignUp = () => {
       specialties: specialities.current.value.split(',').map(s => s.trim()),
     };
 
+    if(mobile.current.value.length!==10){
+      seterrorMsg('mobile number must contain 10 character')
+      return
+    }
+
     try {
       const response =  await fetch('http://localhost:5000/api/signUp-hospital', {
         method: "POST",

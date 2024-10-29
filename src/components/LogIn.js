@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { setType } from './utils/TypeSlice'
+import { setUser } from './utils/UserSlice';
 
 const LogIn = () => {
 
@@ -14,21 +15,44 @@ const LogIn = () => {
   const navigate = useNavigate();
   const [errorMessage,seterrorMessage] = useState(null);
   const dispatch = useDispatch();
-//   toast('signIn successfull')
 
-  const handleClick = () =>{
-    dispatch(setType({ type: "" }));
-    toast.success('SignIn successfully', {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        onClose: () => {'/'}
-    });
+  const handleClick = async() =>{
+
+    try {
+        const response =  await fetch(`http://localhost:5000/api/check-patient-password?type=${"GET"}&value=${email.current.value}&password=${password.current.value}`);
+        const data = await response.json()
+        console.log(data)
+        if (data.passwordMatch === undefined) {
+            // Error handling: Unable to check password
+            console.log("Error checking password");
+            return null;
+        } else if (data.passwordMatch) {
+            // Password matches, return the user data
+            dispatch(setType({ type: "patient" }));
+            dispatch(setUser({uid:data.patient.aadhar,email:data.patient.email,userName:data.patient.name}))
+            toast.success('SignIn successfully', {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                onClose: () => {navigate('/')}
+            });
+            return data.patient;
+        } else {
+            // Password is incorrect
+            seterrorMessage('wrong password');
+        }
+  
+        // dispatch(setUser({email:email.current.value,userName:userName.current.value}))        
+      } catch (error) {
+        console.error('Error adding patient:', error);
+        seterrorMessage(error.message || 'An error occurred. Please try again.');
+      }
+    
             
     
   }

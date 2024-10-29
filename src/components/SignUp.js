@@ -19,7 +19,7 @@ const SignUp = () => {
 
   const handleClick = async () => {
     const patientData = {
-      Name: userName.current.value,
+      name: userName.current.value,
       email: email.current.value,
       aadhar: aadhar.current.value,
       password: password.current.value
@@ -40,7 +40,7 @@ const SignUp = () => {
         console.log("error while logging in")
       }
 
-      dispatch(setUser({email:email.current.value,userName:userName.current.value}))
+      dispatch(setUser({uid:aadhar.current.value,email:email.current.value,userName:userName.current.value}))
       dispatch(setType({ type: "patient" }));
       toast.success('SignUp successfully', {
         position: "top-center",
