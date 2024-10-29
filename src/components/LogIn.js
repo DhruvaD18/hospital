@@ -24,8 +24,7 @@ const LogIn = () => {
         // console.log(data)
         if (data.passwordMatch === undefined) {
             // Error handling: Unable to check password
-            console.log("Error checking password");
-            return null;
+            seterrorMessage('Email not found')
         } else if (data.passwordMatch) {
             // Password matches, return the user data
             dispatch(setType({ type: "patient" }));
