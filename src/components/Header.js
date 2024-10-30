@@ -28,6 +28,7 @@ const Header = () => {
           <Link className="mr-5 hover:text-gray-900" to={'/about'}>About</Link>
           <Link className="mr-5 hover:text-gray-900" to={'/contactus'}>ContactUs</Link>
           {type && type.type==='patient' && <Link className="mr-5 hover:text-gray-900" to={'/hospitals'}>Hospitals</Link>}
+          {type && type.type==='patient' && <Link className="mr-5 hover:text-gray-900" to={'https://rainbow-paletas-c596f6.netlify.app/'} target='_blank'>Remainders</Link>}
         </nav>
         {user && <div className='flex gap-5 items-center'>
           <Link to={'https://ayushmitra-bot.streamlit.app/'} target='_blank' className='h-10 w-fit px-3 py-2 text-center rounded-md bg-black text-white font-semibold'>Chat-bot</Link>

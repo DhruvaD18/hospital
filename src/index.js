@@ -16,6 +16,7 @@ import UserProfile from './components/UserProfile';
 import Hlogin from './components/Hlogin';
 import HsignUp from './components/HsignUp';
 import Hospitals from './components/Hospitals';
+import HospitalPage from './components/HospitalPage';
 
 const Structure = () => {
   return (
@@ -67,6 +68,10 @@ const appRouter = createBrowserRouter([
       {
         path:'/hospitals',
         element:<Hospitals />
+      },
+      {
+        path:'/hospitals/:emailId',
+        element:<HospitalPage />
       }
     ]
   }
