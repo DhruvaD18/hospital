@@ -184,6 +184,29 @@ app.get("/api/hospitals-data",async(req,res)=>{
 })
 
 
+///////////////////////////////FINDING THE SINGLE HOSPITALDATA FOR /api/single-hospital-data/////////////////////////////
+
+app.get("/api/single-hospital-data",async(req,res)=>{
+    try{
+        // console.log(req.query.value)
+        const data = await Hospital.findOne({email:req.query.val}).exec()
+
+        if(!data){
+            return res.status(400).json({
+                error: "No data found",
+            });
+        }else{
+            res.json({data});
+        }
+
+    }catch(e){
+        res.status(500).json({
+            error: "Error in finding hospital data",
+        })
+    }
+})
+
+
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
 
